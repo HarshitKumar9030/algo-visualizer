@@ -1,9 +1,15 @@
 import { useAlgorithmContext } from '../contexts/AlgorithmContext';
 import { useRef } from 'react';
-import algorithms from '../algorithms/index';
+import algorithms from '../algorithms';
 
 export const useAlgorithm = () => {
-  const { elements, setElements, selectedAlgorithm, speed, setIsRunning } = useAlgorithmContext();
+  const {
+    elements,
+    setElements,
+    selectedAlgorithm,
+    speed,
+    setIsRunning,
+  } = useAlgorithmContext();
   const isRunningRef = useRef(false);
 
   const runAlgorithm = async () => {

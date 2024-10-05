@@ -9,7 +9,14 @@ export const quickSort = async (
   high = array.length - 1
 ) => {
   if (low < high && isRunningRef.current) {
-    const pi = await partition(array, setArray, speed, isRunningRef, low, high);
+    const pi = await partition(
+      array,
+      setArray,
+      speed,
+      isRunningRef,
+      low,
+      high
+    );
     await quickSort(array, setArray, speed, isRunningRef, low, pi - 1);
     await quickSort(array, setArray, speed, isRunningRef, pi + 1, high);
   } else if (low === high && isRunningRef.current) {

@@ -1,59 +1,72 @@
-'use client'
+'use client';
 
-import { useEffect, useRef } from 'react'
-import mermaid from 'mermaid'
+import { useEffect, useRef } from 'react';
+import mermaid from 'mermaid';
 
-export default function FlowChart({ algorithmName }: { algorithmName: string }) {
-  const chartRef = useRef<HTMLDivElement>(null)
+const FlowChart = ({ algorithmName }: { algorithmName: string }) => {
+  const chartRef = useRef<HTMLDivElement>(null);
 
   const charts: { [key: string]: string } = {
     'Bubble Sort': `
       graph TD;
-      Start-->Compare["Compare adjacent elements"];
-      Compare-- Yes -->Swap["Swap if out of order"];
-      Swap-->Next["Move to next pair"];
-      Next-->Compare;
-      Compare-- No -->End["Array is sorted"];
+      Start-->B{Is array sorted?};
+      B-- No -->C[Compare adjacent elements];
+      C-->D{Is left > right?};
+      D-- Yes -->E[Swap elements];
+      D-- No -->F[Move to next pair];
+      E-->F;
+      F-->B;
+      B-- Yes -->End[Array is sorted];
     `,
     'Quick Sort': `
       graph TD;
-      Start-->Partition["Partition the array"];
-      Partition-->QuickSortLeft["QuickSort left subarray"];
-      QuickSortLeft-->QuickSortRight["QuickSort right subarray"];
-      QuickSortRight-->End["Array is sorted"];
+      Start-->A[Choose pivot];
+      A-->B[Partition array];
+      B-->C{Left side};
+      B-->D{Right side};
+      C-->QuickSortLeft[Quick Sort Left];
+      D-->QuickSortRight[Quick Sort Right];
+      QuickSortLeft-->End;
+      QuickSortRight-->End;
     `,
     'Merge Sort': `
       graph TD;
-      Start-->Divide["Divide array into halves"];
-      Divide-->Conquer["Recursively sort halves"];
-      Conquer-->Combine["Merge sorted halves"];
-      Combine-->End["Array is sorted"];
+      Start-->A[Divide array];
+      A-->B[Recursively divide];
+      B-->C[Merge halves];
+      C-->D{Is array fully merged?};
+      D-- No -->B;
+      D-- Yes -->End[Array is sorted];
     `,
     'Insertion Sort': `
       graph TD;
-      Start-->Pick["Pick next element"];
-      Pick-->Compare["Compare with sorted part"];
-      Compare-- Yes -->Shift["Shift larger elements"];
-      Shift-->Insert["Insert element"];
-      Insert-->Pick;
-      Compare-- No -->Pick;
+      Start-->A[Pick element];
+      A-->B{Compare with left elements};
+      B-- Yes -->C[Shift elements];
+      C-->B;
+      B-- No -->D[Insert element];
+      D-->E{More elements left?};
+      E-- Yes -->A;
+      E-- No -->End[Array is sorted];
     `,
-  }
+  };
 
   useEffect(() => {
-    mermaid.initialize({ startOnLoad: true })
+    mermaid.initialize({ startOnLoad: true, theme: 'dark' });
     if (chartRef.current) {
-      chartRef.current.innerHTML = charts[algorithmName] || ''
-      mermaid.contentLoaded()
+      chartRef.current.innerHTML = charts[algorithmName] || '';
+      mermaid.contentLoaded();
     }
-  }, [algorithmName])
+  }, [algorithmName]);
 
   return (
     <div className="flex-1 p-4">
       <h2 className="text-center font-bold mb-2">{algorithmName} Flowchart</h2>
-      <div className="border rounded p-2 bg-white">
+      <div className="border border-zinc-700 rounded p-2 bg-zinc-800">
         <div ref={chartRef} className="mermaid"></div>
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default FlowChart;

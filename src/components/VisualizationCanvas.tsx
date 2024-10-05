@@ -1,12 +1,12 @@
-'use client'
+'use client';
 
-import { useAlgorithmContext } from '../contexts/AlgorithmContext'
+import { useAlgorithmContext } from '../contexts/AlgorithmContext';
 
-export default function VisualizationCanvas() {
-  const { elements } = useAlgorithmContext()
+const VisualizationCanvas = () => {
+  const { elements } = useAlgorithmContext();
 
   return (
-    <div className="flex-1 flex items-end justify-center h-80 border p-4 bg-gray-50">
+    <div className="flex-1 flex items-end justify-center h-80 border border-zinc-700 p-4 bg-zinc-900">
       {elements.map((el, idx) => (
         <div
           key={idx}
@@ -17,11 +17,13 @@ export default function VisualizationCanvas() {
               ? 'bg-red-500'
               : el.state === 'swapped'
               ? 'bg-yellow-500'
-              : 'bg-blue-500'
+              : 'bg-zinc-500'
           }`}
           style={{ height: `${el.value}%` }}
         ></div>
       ))}
     </div>
-  )
-}
+  );
+};
+
+export default VisualizationCanvas;

@@ -23,7 +23,8 @@ export default function Controls() {
       value: Math.floor(Math.random() * 100),
       state: 'default',
     }))
-    setElements(newArray)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setElements(newArray as any[])
   }
 
   const handleAlgorithmChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

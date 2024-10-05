@@ -14,11 +14,14 @@ interface AlgorithmContextType {
   setIsRunning: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AlgorithmContext = createContext<AlgorithmContextType | undefined>(undefined);
+const AlgorithmContext = createContext<AlgorithmContextType | undefined>(
+  undefined
+);
 
 export const AlgorithmProvider = ({ children }: { children: React.ReactNode }) => {
   const [elements, setElements] = useState<ElementType[]>([]);
-  const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>('Bubble Sort');
+  const [selectedAlgorithm, setSelectedAlgorithm] =
+    useState<string>('Bubble Sort');
   const [speed, setSpeed] = useState<number>(100);
   const [isRunning, setIsRunning] = useState<boolean>(false);
 
@@ -43,7 +46,9 @@ export const AlgorithmProvider = ({ children }: { children: React.ReactNode }) =
 export const useAlgorithmContext = () => {
   const context = useContext(AlgorithmContext);
   if (!context) {
-    throw new Error('useAlgorithmContext must be used within AlgorithmProvider');
+    throw new Error(
+      'useAlgorithmContext must be used within AlgorithmProvider'
+    );
   }
   return context;
 };
